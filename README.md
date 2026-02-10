@@ -1,4 +1,4 @@
-P2P FUSE Distributed Storage
+#P2P FUSE Distributed Storage
 
 A lightweight, decentralized storage solution that allows devices on the same network to discover each other and share disk space securely.
  Features
@@ -86,12 +86,12 @@ The system uses a Rolling XOR Cipher.
     Offset-Aware: To support random access (seeking) within a file, the XOR cipher uses the file offset to align the key correctly:
     CipherByte=DataByte⊕Key[(i+offset)(modKeyLength)]
 
- Roadmap
+ Future work
 
-    [ ] Support for AES-256 encryption.
+    Support for AES-256 encryption.
 
-    [ ] Implementation of file caching for faster getattr calls.
+    Implementation of file caching for faster getattr calls.
 
-    [ ] User authentication (Username/Password) during handshake.
+    User authentication (Username/Password) during handshake.
 
-    [ ] Support for Windows via WinFsp.
+    Support for Windows via WinFsp.
