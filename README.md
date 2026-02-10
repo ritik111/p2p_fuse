@@ -1,4 +1,4 @@
-#P2P FUSE Distributed Storage
+# P2P FUSE Distributed Storage
 
 A lightweight, decentralized storage solution that allows devices on the same network to discover each other and share disk space securely.
  Features
@@ -30,13 +30,13 @@ The system consists of two primary components:
 
 2. The Server (s.py)
 
-    Listens for UDP broadcasts on port 4444.
+   Listens for UDP broadcasts on port 4444.
 
-    Checks disk availability against client requirements.
+   Checks disk availability against client requirements.
 
-    Isolated Storage: Creates a unique directory client_storage_[IP] for every connecting client.
+   Isolated Storage: Creates a unique directory client_storage_[IP] for every connecting client.
 
-    Persistent Execution: Designed to run as a background service.
+   Persistent Execution: Designed to run as a background service.
 
  Getting Started
 Prerequisites
@@ -53,27 +53,29 @@ Server Setup
     python3 s.py
     
 Client Setup
+    
     cd client
     python3 c.py
 
- Configuration & Commands
-Protocol Details
-Protocol	Port	Function
-UDP	4444	Server Discovery & Handshake
-TCP	Dynamic	File Data Transfer (Assigned by Server)
-Deployment (Background)
+ Configuration & Protocol Details
+
+    UDP	4444	Server Discovery & Handshake
+    TCP	Dynamic	File Data Transfer (Assigned by Server)
+    Deployment (Background)
 
 To run the services in the background and log output:
 
 Server:
 Bash
 
+    cd server
     chmod +x ./server_install.sh
     ./server_install.sh
 
 Client:
 Bash
 
+    cd client
     chmod +x ./client_install.sh
     ./client_install.sh
 
