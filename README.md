@@ -1,19 +1,21 @@
 P2P FUSE Distributed Storage
 
 A lightweight, decentralized storage solution that allows devices on the same network to discover each other and share disk space securely.
-✨ Features
+ Features
 
-    🔍 Auto-Discovery: Clients use UDP broadcasting to find available storage servers on the network automatically.
+     Auto-Discovery: Clients use UDP broadcasting to find available storage servers on the network automatically.
 
-    📂 FUSE Integration: Mount remote storage as a local folder. Use standard commands like ls, cp, mv, and rm just like a local disk.
+     FUSE Integration: Mount remote storage as a local folder. Use standard commands like ls, cp, mv, and rm just like a local disk.
 
-    🔐 Encrypted Transfer: All file data is encrypted/decrypted on-the-fly using an XOR Cipher with a unique persistent key.
+     Encrypted Transfer: All file data is encrypted/decrypted on-the-fly using an XOR Cipher with a unique persistent key.
 
-    ⚡ Multi-Threaded Server: The server can handle multiple client requests by spinning up dedicated service threads on dynamic ports.
+     Multi-Threaded Server: The server can handle multiple client requests by spinning up dedicated service threads on dynamic ports.
 
-    🛡️ Path Sanity: Server-side checks prevent "Path Traversal" attacks to ensure clients only access their designated storage folders.
+     Metadata Caching: High-performance client-side caching to minimize network latency during directory traversal.
 
-🏗️ Architecture
+     Path Sanity: Server-side checks prevent "Path Traversal" attacks to ensure clients only access their designated storage folders.
+
+ Architecture
 
 The system consists of two primary components:
 1. The Client (c.py)
@@ -36,42 +38,25 @@ The system consists of two primary components:
 
     Persistent Execution: Designed to run as a background service.
 
-🚀 Getting Started
+ Getting Started
 Prerequisites
 
     Linux (FUSE support is native).
 
     Python 3.x
 
-    fusepy library: pip install fusepy
+    fusepy library: pip install fusepy (optional, there is a fuse.py file in the client directory)
 
 Server Setup
 
-    Open port 4444 for discovery:
-    Bash
-
-    sudo ufw allow 4444/udp
-
-    Run the server:
-    Bash
-
+    cd server
     python3 s.py
-
+    
 Client Setup
-
-    Create a mount point (if not created automatically):
-    Bash
-
-    mkdir ~/p2p_storage
-
-    Run the client:
-    Bash
-
+    cd client
     python3 c.py
 
-    Navigate to p2p_storage to start using remote disk space!
-
-🛠️ Configuration & Commands
+ Configuration & Commands
 Protocol Details
 Protocol	Port	Function
 UDP	4444	Server Discovery & Handshake
@@ -83,17 +68,25 @@ To run the services in the background and log output:
 Server:
 Bash
 
-nohup python3 s.py > server_log.log 2>&1 &
+    chmod +x ./server_install.sh
+    ./server_install.sh
 
 Client:
 Bash
 
-nohup python3 c.py > client_log.log 2>&1 &
+    chmod +x ./client_install.sh
+    ./client_install.sh
 
-🔒 Security Note
+Security & Encryption
 
-This project uses an XOR Cipher for demonstration. While it prevents casual snooping of the files on the server's disk, it is not a replacement for industry-standard encryption like AES for production environments.
-📜 Roadmap
+The system uses a Rolling XOR Cipher.
+
+    Key Generation: A unique 5-digit key is generated for every new server connection and saved to a _key.txt file.
+
+    Offset-Aware: To support random access (seeking) within a file, the XOR cipher uses the file offset to align the key correctly:
+    CipherByte=DataByte⊕Key[(i+offset)(modKeyLength)]
+
+ Roadmap
 
     [ ] Support for AES-256 encryption.
 
